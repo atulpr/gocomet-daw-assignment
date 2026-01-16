@@ -49,9 +49,14 @@ cp .env.example .env
 ```bash
 cd backend
 npm install
-npx prisma generate
-npx prisma migrate dev
-npx prisma db seed
+
+# Run database migrations
+npm run db:migrate
+
+# Seed database with sample data
+npm run db:seed
+
+# Start development server
 npm run dev
 ```
 
@@ -89,15 +94,21 @@ docker-compose restart redis
 ### Database
 
 ```bash
-# Open Prisma Studio (GUI for database)
+# Connect to PostgreSQL
+docker exec -it gocomet-postgres psql -U gocomet -d ridehailing
+
+# Run migrations manually
 cd backend
-npx prisma studio
+npm run db:migrate
 
-# Reset database
-npx prisma migrate reset
+# Seed database
+npm run db:seed
 
-# Create new migration
-npx prisma migrate dev --name <migration_name>
+# View tables
+\dt
+
+# Query rides
+SELECT * FROM rides LIMIT 10;
 ```
 
 ### Kafka
